@@ -1,0 +1,6 @@
+@api_sk1_01efc_HostAddress = http://localhost:5022
+
+GET {{api_sk1_01efc_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
