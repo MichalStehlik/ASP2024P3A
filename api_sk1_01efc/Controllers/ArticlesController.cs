@@ -24,9 +24,29 @@ namespace api_sk1_01efc.Controllers
 
         // GET: api/Articles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Article>>> GetArticles()
+        public async Task<ActionResult<IEnumerable<ListResult<Article>>>> GetArticles(string? search, string? title, string? content, string? order, int page = 0, int size = 10)
         {
-            return await _context.Articles.ToListAsync();
+            IQueryable<Article> articles = _context.Articles;
+            //filtrace
+            if (!String.IsNullOrEmpty(title)) 
+                articles = articles.Where(x => x.Title.StartsWith(title));
+            if (!String.IsNullOrEmpty(content)) 
+                articles = articles.Where(x => x.Content.Contains(content));
+            if (!String.IsNullOrEmpty(search))
+                articles = articles.Where(x => x.Title.Contains(search) || x.Content.Contains(search));
+            // řazení
+            switch(order)
+            {
+                case "title": articles = articles.OrderBy(x => x.Title); break;
+                case "title_desc": articles = articles.OrderByDescending(x => x.Title); break;
+                case "id_desc": articles = articles.OrderByDescending(x => x.ArticleId); break;
+                default: articles = articles.OrderBy(x => x.ArticleId); break;
+            }
+            // paginace
+            if (page > 0) articles = articles.Skip((page - 1) * size);
+            if (size > 0) articles = articles.Take(size);
+            var result = new ListResult<Article>() { Data = await articles.ToListAsync()};
+            return Ok(result);
         }
 
         // GET: api/Articles/5

@@ -9,6 +9,6 @@ namespace api_sk1_01efc.Models
         public required string Title { get; set; }
         [Required]
         public required string Content { get; set; }
-        public List<Comment> Comments { get; set; } = [];
+        public List<Comment> Comments { get; set; } = []; // navigation property
     }
 }
