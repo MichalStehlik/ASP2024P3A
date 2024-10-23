@@ -1,12 +1,10 @@
-﻿namespace api_sk1_02files.Models
+﻿namespace api_sk1_02files.InputModels
 {
-    public class Item
+    public class FileListVM
     {
         public Guid ItemId { get; set; }
         public required string Name { get; set; }
         public required string Type { get; set; }
         public required DateTime Created { get; set; }
-        public required byte[] Content { get; set; }
-        public byte[]? Thumbnail { get; set; }
     }
 }
