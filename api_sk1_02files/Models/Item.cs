@@ -8,5 +8,6 @@
         public required DateTime Created { get; set; }
         public required byte[] Content { get; set; }
         public byte[]? Thumbnail { get; set; }
+        public int Size { get; set; }
     }
 }
